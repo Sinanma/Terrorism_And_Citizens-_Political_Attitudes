@@ -24,10 +24,15 @@ library(tidyverse)
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. 
+As we entered the 21st century, terrorism has emerged as a central concern in global politics, influencing international relations and shaping the societal landscape across the world. This phenomenon has not only reshaped diplomatic engagements but also transformed societal dynamics on a global scale which prompts a critical examination of terrorism's broader implications, particularly its impact on public attitudes towards democracy. In an with regular occurrence of terrorist incidents, the impact of terrorism on public opinion has emerged as a critical area of research, bringing up attention to how incidents of terrorism reshape public attitudes towards outgroup hostility, political conservatism, and national unity.
 
-The remainder of this paper is structured as follows. @sec-data....
+Building upon this foundation, our study aims to replicate and extend the analysis by *Amélie Godefroidt* in 2022, published in American Journal of Political Science [@Godefroidt202], which highlighted the significant impact of various forms of terrorism on public attitudes, from local insurgencies to global campaigns.
 
+This paper delves into the complex dynamics of terrorism's influence on public political opinion. It extends the discourse beyond conventional analysis to explore how various expressions of terrorism—ranging from domestic to international incidents—affect public attitudes, with a particular focus on outgroup hostility, political conservatism, and rally-'round-the-flag phenomena. Despite a growing body of research in this field, there remains a significant gap in understanding the holistic and nuanced effects of different forms of terrorism across diverse sociopolitical contexts. To address this gap, we systematically analyze and integrate findings from prior research, employing a variety of methodological approaches to offer a comprehensive overview of terrorism's impact on public sentiment.
+
+Our investigation reveals that terrorism indeed prompts significant shifts in public opinion, leading to an increase in outgroup hostility and a tilt towards political conservatism, alongside observable variations in national unity rallying effects. These reactions are found to be deeply influenced by the nature of the terrorist threat and the specific sociopolitical context in which they occur. The findings underscore the critical role of context in shaping public responses to terrorism, highlighting the importance of considering the diversity of terrorism expressions and the sociopolitical landscape when evaluating its impact.
+
+This research contributes to the ongoing dialogue on the implications of terrorism for democratic societies by providing empirical evidence of terrorism's subtle yet significant influence on public political attitudes. By shedding light on the conditions under which terrorism most profoundly affects public sentiment, this paper aims to inform policymakers and scholars alike, guiding the development of strategies that bolster democratic resilience in the face of terror. This paper is organized as follows: an overview of the methodological framework used in our analysis, a presentation of the findings, a discussion contextualizing these results within the broader implications for democracy, and concluding remarks that suggest directions for future research and policy considerations.
 
 
 # Data {#sec-data}
