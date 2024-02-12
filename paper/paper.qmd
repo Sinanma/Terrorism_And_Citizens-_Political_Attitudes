@@ -35,7 +35,17 @@ Our investigation reveals that terrorism indeed prompts significant shifts in pu
 This research contributes to the ongoing dialogue on the implications of terrorism for democratic societies by providing empirical evidence of terrorism's subtle yet significant influence on public political attitudes. By shedding light on the conditions under which terrorism most profoundly affects public sentiment, this paper aims to inform policymakers and scholars alike, guiding the development of strategies that bolster democratic resilience in the face of terror. This paper is organized as follows: an overview of the methodological framework used in our analysis, a presentation of the findings, a discussion contextualizing these results within the broader implications for democracy, and concluding remarks that suggest directions for future research and policy considerations.
 
 
+
+
+
 # Data {#sec-data}
+
+## Source
+Our study is based on a detailed examination by Amélie Godefroidt published in 2022 in the American Journal of Political Science. This important research looks into how terrorism affects what people think about democracy and politics, using a wide range of examples from small local attacks to large international ones. We aim to do more research based on Godefroidt's work, using her collection of data from 241 papers, which cover 326 studies and provide 1,733 measurements of how terrorism influences people's political views. This collection of information, gathered through careful research and organization, is the main resource for our study as we explore the complex effects of terrorism in different settings around the world.
+
+## Methodology
+Our approach to expanding on the original study involves a detailed process known as meta-analysis. This means we take a closer look at a bunch of studies already done on how terrorism changes people's opinions and combine their results to get a clearer picture. Following the steps outlined by Godefroidt, we gather, sort out, and examine data from various sources, focusing on 1,733 data points that show the relationship between terrorism and public opinion. We make sure all these points can be compared fairly by converting them into a standard format and adjusting them so they all point in the same direction. This makes our analysis strong and trustworthy. We also add new studies to the mix and use more sophisticated statistical methods to handle the data better, aiming to deepen our understanding of terrorism's impact on how people feel about democracy, strangers, and political beliefs in different parts of the world.
+
 
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
