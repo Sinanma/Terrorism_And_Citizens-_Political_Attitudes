@@ -6,10 +6,13 @@ This GitHub repo contains all files for paper *Exploring the Shadows of Terror: 
 
 Link ro origional paper: <https://onlinelibrary.wiley.com/doi/epdf/10.1111/ajps.12692>
 
-## Guide to this repo
+# File Structure
 
--   The final report can be found in `outputs`
+The repo is structured as:
 
--   Data files used in the original paper and this report can be found in `inputs`
+-   `input/data` contains the data used in this paper.
+-   `outputs/paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper.
 
-Part of the R code used in this paper was adapted from *Telling Stories with Data* (Alexander 2023).
+# LLM Usage Statement
+
+None of the components of this paper involved the use of LLMs.
