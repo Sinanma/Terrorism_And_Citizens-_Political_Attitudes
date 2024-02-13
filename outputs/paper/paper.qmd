@@ -18,13 +18,17 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
+# install.packages("tidyverse")
+# install.packages("readxl")
+# install.packages("ggplot2")
+# install.packages("ggpubr")
+# install.packages("dplyr")
+
 library(tidyverse)
-library(readxl)
+library(readxl) # reading excel files
 library(ggplot2)
-library(ggpubr)
+library(ggpubr) # for gg rearrange
 library(dplyr)
-library(psych)
-library(patchwork)
 ```
 
 
@@ -229,6 +233,624 @@ ggarrange(StudyYear, PubYear,
 ```
 
 
+Another figure
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+##### Fig3A.1 Overall ##### 
+library(broom)
+library(dotwhisker)
+library(cowplot)
+library(metafor)
+############################
+# 1) outgroup dataset
+dat_outgroup <- dat[dat$PA_Category == 10 |
+                      dat$PA_Category == 99, ]
+# 2) conservative shift dataset
+dat_conservatism <- dat[dat$PA_Category == 5 |
+                          dat$PA_Category == 6 |
+                          dat$PA_Category == 7 |
+                          dat$PA_Category == 8 |
+                          dat$PA_Category == 9 |
+                          dat$PA_Category == 11, ]
+# 3) rally-around-the-flag dataset
+dat_rally <- dat[dat$PA_Category == 1 |
+                   dat$PA_Category == 2 |
+                   dat$PA_Category == 3 |
+                   dat$PA_Category == 4, ]
+######################################################
+dat_outgroup$TerrorType2[dat_outgroup$Type==0] <- "No ideology"
+dat_outgroup$TerrorType2[dat_outgroup$Type==1] <- "Islamist"
+dat_outgroup$TerrorType2[is.na(dat_outgroup$TerrorType2)] <- "Other"
+dat_outgroup$TerrorType2 <- as.factor(dat_outgroup$TerrorType2)
+#convert into dummy variables
+dat_outgroup$Islam <- ifelse(dat_outgroup$TerrorType2=="Islamist", yes=1, no=0)
+dat_outgroup$No_Ideology <- ifelse(dat_outgroup$TerrorType2=="No ideology", yes=1, no=0)
+dat_outgroup$Other_Ideology <- ifelse(dat_outgroup$TerrorType2=="Other", yes=1, no=0)
+################################
+dat_outgroup$Exp <- ifelse(dat_outgroup$TypeStudy==1, yes=1, no=0)
+dat_outgroup$QuasiLong <- ifelse(dat_outgroup$TypeStudy==2 | 
+                                   dat_outgroup$TypeStudy==4, yes=1, no=0)
+dat_outgroup$Corr <- ifelse(dat_outgroup$TypeStudy==3, yes=1, no=0)
+################################
+dat_outgroup$Sample[dat_outgroup$GeneralPop==1] <- "General"
+dat_outgroup$Sample[dat_outgroup$StudentPop==1] <- "Student"
+dat_outgroup$Sample[is.na(dat_outgroup$Sample)] <- "Convenience"
+dat_outgroup$Sample <- as.factor(dat_outgroup$Sample)
+dat_outgroup$General <- ifelse(dat_outgroup$Sample=="General", yes=1, no=0)
+dat_outgroup$Student <- ifelse(dat_outgroup$Sample=="Student", yes=1, no=0)
+dat_outgroup$Convenience <- ifelse(dat_outgroup$Sample=="Convenience", yes=1, no=0)
+################################
+dat_outgroup$US <- ifelse(dat_outgroup$Country=="US", yes=1, no=0)
+dat_outgroup$Israel <- ifelse(dat_outgroup$Country=="Israel", yes=1, no=0)
+dat_outgroup$Other_c <- ifelse(dat_outgroup$US==0 
+                               & dat_outgroup$Israel==0, yes=1, no=0)
+############################
+dat_outgroup$TargetSim[dat_outgroup$OA_Similarity==2] <- "A lot"
+dat_outgroup$TargetSim[dat_outgroup$OA_Similarity==1] <- "A bit"
+dat_outgroup$TargetSim[dat_outgroup$OA_Similarity==0] <- "No"
+dat_outgroup$TargetSim <- as.factor(dat_outgroup$TargetSim)
+#convert into dummy variables
+dat_outgroup$Lot <- ifelse(dat_outgroup$TargetSim=="A lot", yes=1, no=0)
+dat_outgroup$Bit <- ifelse(dat_outgroup$TargetSim=="A bit", yes=1, no=0)
+dat_outgroup$No <- ifelse(dat_outgroup$TargetSim=="No", yes=1, no=0)
+
+########################################
+dat_conservatism$TerrorType2[dat_conservatism$Type==0] <- "No ideology"
+dat_conservatism$TerrorType2[dat_conservatism$Type==1] <- "Islamist"
+dat_conservatism$TerrorType2[is.na(dat_conservatism$TerrorType2)] <- "Other"
+dat_conservatism$TerrorType2 <- as.factor(dat_conservatism$TerrorType2)
+#convert into dummy variables
+dat_conservatism$Islam <- ifelse(dat_conservatism$TerrorType2=="Islamist", yes=1, no=0)
+dat_conservatism$No_Ideology <- ifelse(dat_conservatism$TerrorType2=="No ideology", yes=1, no=0)
+dat_conservatism$Other_Ideology <- ifelse(dat_conservatism$TerrorType2=="Other", yes=1, no=0)
+#############################
+dat_conservatism$Exposure <- ifelse(dat_conservatism$TerrorMeasure=="Acts of violence", yes=1, no=0)
+dat_conservatism$R_Exposure <- ifelse(dat_conservatism$TerrorMeasure=="Reported exposure", yes=1, no=0)
+dat_conservatism$Threat <- ifelse(dat_conservatism$TerrorMeasure=="Threat", yes=1, no=0)
+dat_conservatism$Emotions <- ifelse(dat_conservatism$TerrorMeasure=="Fear" | 
+                                      dat_conservatism$TerrorMeasure=="Anger", yes=1, no=0)
+dat_conservatism$Fear <- ifelse(dat_conservatism$TerrorMeasure=="Fear", yes=1, no=0)
+dat_conservatism$Anger <- ifelse(dat_conservatism$TerrorMeasure=="Anger", yes=1, no=0)
+dat_conservatism$Other_IV <- ifelse(dat_conservatism$TerrorMeasure=="Other", yes=1, no=0)
+################################################################
+#recode data
+dat_conservatism$Design[dat_conservatism$TypeStudy==1] <- "Experiments"
+dat_conservatism$Design[dat_conservatism$TypeStudy==2] <- "Quasi-Long"
+dat_conservatism$Design[dat_conservatism$TypeStudy==3] <- "Correlations"
+dat_conservatism$Design[dat_conservatism$TypeStudy==4] <- "Quasi-Long"
+dat_conservatism$Design <- as.factor(dat_conservatism$Design)
+#convert characters into dummy variables
+dat_conservatism$Exp <- ifelse(dat_conservatism$TypeStudy==1, yes=1, no=0)
+dat_conservatism$QuasiLong <- ifelse(dat_conservatism$TypeStudy==2 | 
+                                       dat_conservatism$TypeStudy==4, yes=1, no=0)
+dat_conservatism$Corr <- ifelse(dat_conservatism$TypeStudy==3, yes=1, no=0)
+################################################
+#recode data
+dat_conservatism$Country2[dat_conservatism$Country=="US"] <- "US"
+dat_conservatism$Country2[dat_conservatism$Country=="Israel"] <- "Israel"
+dat_conservatism$Country2[is.na(dat_conservatism$Country2)] <- "Other"
+dat_conservatism$Country2 <- as.factor(dat_conservatism$Country2)
+#convert characters into dummy variables
+dat_conservatism$US <- ifelse(dat_conservatism$Country=="US", yes=1, no=0)
+dat_conservatism$Israel <- ifelse(dat_conservatism$Country=="Israel", yes=1, no=0)
+dat_conservatism$Other_c <- ifelse(dat_conservatism$US==0 
+                               & dat_conservatism$Israel==0, yes=1, no=0)
+################################################
+
+#recode data
+dat_conservatism$Sample[dat_conservatism$GeneralPop==1] <- "General"
+dat_conservatism$Sample[dat_conservatism$StudentPop==1] <- "Student"
+dat_conservatism$Sample[is.na(dat_conservatism$Sample)] <- "Convenience"
+dat_conservatism$Sample <- as.factor(dat_conservatism$Sample)
+#convert characters into dummy variables
+dat_conservatism$General <- ifelse(dat_conservatism$Sample=="General", yes=1, no=0)
+dat_conservatism$Student <- ifelse(dat_conservatism$Sample=="Student", yes=1, no=0)
+dat_conservatism$Convenience <- ifelse(dat_conservatism$Sample=="Convenience", yes=1, no=0)
+
+################################################
+set.seed(1234)
+og_overall <- rma.mv(y=Fisher, V=Variance_F,
+                     random = ~ 1 | ID_R/ID_ES_Unique, data=dat_outgroup,
+                     method = "ML")
+og_overall_df <- tidy(og_overall) # create data.frame of regression results
+
+og_overall_df <- og_overall_df %>%  #re-label variable
+  relabel_predictors(overall = "Overall Fisher's Z \n Correlation Coef." )           
+og_overall_plot <- dwplot(og_overall_df, #plot
+                          dot_args = list(size = 3),
+                          whisker_args = list(size = 1),
+                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 1))+
+  ggtitle("Outgroup Hostility") +
+  scale_color_grey() +
+  xlim(-0.1, .25) +
+  theme(axis.title.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.text.y = element_text(face = "bold",size = 14),
+        axis.ticks.x=element_blank(),
+        axis.text.x=element_blank(),
+        plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+        panel.background = element_rect(fill = "grey90",
+                                        colour = "grey90"),
+        panel.grid = element_line(colour = "grey60"))
+
+
+##### Fig3A.2 Terror type ##### 
+#fit model and plot results
+set.seed(1234)
+og_terror <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(Islam, Other_Ideology, No_Ideology),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_outgroup,
+                    method = "ML")
+
+og_terror_df <- tidy(og_terror) # create data.frame of regression results
+
+og_terror_df <- og_terror_df %>%  #re-label variable
+  relabel_predictors(c(Islam = "Islamist",
+                       Other_Ideology  = "Other ideology",
+                       No_Ideology  = "No ideology"))
+og_terror_plot <- dwplot(og_terror_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  scale_color_grey() +
+  xlim(-0.1, .25) 
+
+##### Fig3A.3 Research Design ##### 
+#fit model and plot results
+set.seed(1234)
+og_design <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(Exp, QuasiLong, Corr),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_outgroup,
+                    method = "ML")
+
+og_design_df <- tidy(og_design) # create data.frame of regression results
+
+og_design_df <- og_design_df %>%  #re-label variable
+  relabel_predictors(c(Exp = "Experiment",
+                       Corr  = "Cross-sectional",
+                       QuasiLong  = "Other designs"))
+og_design_plot <- dwplot(og_design_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  scale_color_grey() +
+  xlim(-0.1, .25) 
+
+##### Fig3A.4 Sample  ##### 
+#fit model and plot results
+set.seed(1234)
+og_sample <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(General, Student, Convenience),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_outgroup,
+                    method = "ML")
+
+og_sample_df <- tidy(og_sample) # create data.frame of regression results
+
+og_sample_df <- og_sample_df %>%  #re-label variable
+  relabel_predictors(c(General = "General population",
+                       Student  = "Student sample",
+                       Convenience  = "Convenience sample"))
+og_sample_plot <- dwplot(og_sample_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  scale_color_grey() +
+  xlim(-0.1, .25) 
+
+##### Fig3A.5 Geography ##### 
+#fit model and plot results
+set.seed(1234)
+og_location <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(US, Israel, Other_c),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_outgroup,
+                    method = "ML")
+og_location_df <- tidy(og_location) # create data.frame of regression results
+
+og_location_df <- og_location_df %>%  #re-label variable
+  relabel_predictors(c(US = "United States",
+                       Israel  = "Israel",
+                       Other_c  = "Other countries"))
+og_location_plot <- dwplot(og_location_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  scale_color_grey() +
+  xlim(-0.1, .25) 
+
+##### Fig3A.6 Guilt-by-Association ##### 
+#fit model and plot results
+set.seed(1234)
+og_association <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(Lot, Bit, No),
+                      intercept=F, 
+                      random = ~ 1 | ID_R/ID_ES_Unique, data=dat_outgroup,
+                      method = "ML")
+
+og_association_df <- tidy(og_association) # create data.frame of regression results
+
+og_association_df <- og_association_df %>%  #re-label variable
+  relabel_predictors(c(Lot = "Strong association",
+                       Bit  = "Moderate association",
+                       No  = "No association"))
+og_association_plot <- dwplot(og_association_df, #plot
+                           dot_args = list(size = 2),
+                           whisker_args = list(size = 0.5),
+                           vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  ggtitle("Guilt-By-Association") +
+  scale_y_discrete(position = "left") +
+  scale_color_grey() +
+  theme(axis.title=element_text(face = "bold"),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"))+
+  xlim(-0.1, .25) 
+
+##### Fig3A Outgroup Hostility Effect Sizes Plot ##### 
+og_plots <- plot_grid(og_overall_plot, og_terror_plot, og_design_plot, og_sample_plot, og_location_plot,
+                      og_association_plot,
+                      ncol=1, nrow=6, 
+                      rel_heights=c(0.8,1,1,1,1,1), align = "v")
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # 
+##### Fig3B. Conservative Shift Hypothesis ##### 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # 
+##### Fig3B.1 Overall ##### 
+set.seed(1234)
+cs_overall <- rma.mv(y=Fisher, V=Variance_F,
+                     random = ~ 1 | ID_R/ID_ES_Unique, data=dat_conservatism,
+                     method = "ML")
+cs_overall_df <- tidy(cs_overall) # create data.frame of regression results
+
+cs_overall_df <- cs_overall_df %>% 
+  relabel_predictors(c(overall = "Overall Effect Size")) #re-label variable
+cs_overall_plot <- dwplot(cs_overall_df, #plot
+                          dot_args = list(size = 3),
+                          whisker_args = list(size = 1),
+                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 1))+
+  ggtitle("Conservative Shift") +
+  scale_color_grey() +
+  xlim(-0.1, .25) +
+  theme(axis.title.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.ticks=element_blank(),
+        axis.text=element_blank(),
+        plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+        panel.background = element_rect(fill = "grey90",
+                                        colour = "grey90"),
+        panel.grid = element_line(colour = "grey60"))
+
+##### Fig3B.2 Terror type ##### 
+#fit model and plot results
+set.seed(1234)
+cs_terror <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(Islam, Other_Ideology, No_Ideology),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_conservatism,
+                    method = "ML")
+
+cs_terror_df <- tidy(cs_terror) # create data.frame of regression results
+
+cs_terror_df <- cs_terror_df %>%  #re-label variable
+  relabel_predictors(c(Islam = "Islamist",
+                       Other_Ideology  = "Other Ideology",
+                       No_Ideology  = "No Ideology"))
+cs_terror_plot <- dwplot(cs_terror_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(plot.title = element_text(size = 14), axis.text=element_blank(), axis.ticks=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  scale_color_grey() +
+  xlim(-0.1, .25) 
+
+##### Fig3B.3 Research Design ##### 
+#fit model and plot results
+set.seed(1234)
+cs_design <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(Exp, QuasiLong, Corr),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_conservatism,
+                    method = "ML")
+cs_design_df <- tidy(cs_design) # create data.frame of regression results
+
+cs_design_df <- cs_design_df %>%  #re-label variable
+  relabel_predictors(c(Exp = "Experiments",
+                       Corr  = "Cross-Sectional",
+                       QuasiLong  = "Other Designs"))
+cs_design_plot <- dwplot(cs_design_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(plot.title = element_text(size = 14), axis.text=element_blank(), 
+        axis.ticks=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  scale_color_grey() +
+  xlim(-0.1, .25) 
+
+##### Fig3B.4 Sample  ##### 
+#fit model and plot results
+set.seed(1234)
+cs_sample <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(General, Student, Convenience),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_conservatism,
+                    method = "ML")
+
+cs_sample_df <- tidy(cs_sample) # create data.frame of regression results
+
+cs_sample_df <- cs_sample_df %>%  #re-label variable
+  relabel_predictors(c(General = "General Population",
+                       Student  = "Student Samples",
+                       Convenience  = "Convenience Samples"))
+cs_sample_plot <- dwplot(cs_sample_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(plot.title = element_text(size = 14), 
+        axis.text=element_blank(), axis.ticks=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  scale_color_grey() +
+  xlim(-0.1, .25) 
+
+##### Fig3B.5 Geography ##### 
+#fit model and plot results
+set.seed(1234)
+cs_location <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(US, Israel, Other_c),
+                      intercept=F, 
+                      random = ~ 1 | ID_R/ID_ES_Unique, data=dat_conservatism,
+                      method = "ML")
+cs_location_df <- tidy(cs_location) # create data.frame of regression results
+
+cs_location_df <- cs_location_df %>%  #re-label variable
+  relabel_predictors(c(US = "United States",
+                       Israel  = "Israel",
+                       Other_c  = "Other Countries"))
+cs_location_plot <- dwplot(cs_location_df, #plot
+                           dot_args = list(size = 2),
+                           whisker_args = list(size = 0.5),
+                           vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(plot.title = element_text(size = 14), 
+        axis.text.y=element_blank(), axis.ticks.y=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  scale_color_grey() +
+  xlim(-0.1, .25) 
+
+##### Fig3B Conservative Shift Effect Sizes Plot ##### 
+cs_plots <- plot_grid(cs_overall_plot, cs_terror_plot, cs_design_plot, cs_sample_plot, cs_location_plot, 
+                      ncol=1, nrow=6, 
+                      rel_heights=c(0.8,1,1,1,1,1), align = "v")
+
+```
+
+
+
+
+
+```{r fig.width=15, fig.height=16}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # 
+##### Fig3C. Rally Effects Hypothesis ##### 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # 
+##### Fig3C.1 Overall ##### 
+#recode data
+dat_rally$TerrorType2[dat_rally$Type==0] <- "No ideology"
+dat_rally$TerrorType2[dat_rally$Type==1] <- "Islamist"
+dat_rally$TerrorType2[is.na(dat_rally$TerrorType2)] <- "Other"
+dat_rally$TerrorType2 <- as.factor(dat_rally$TerrorType2)
+#convert into dummy variables
+dat_rally$Islam <- ifelse(dat_rally$TerrorType2=="Islamist", yes=1, no=0)
+dat_rally$No_Ideology <- ifelse(dat_rally$TerrorType2=="No ideology", yes=1, no=0)
+dat_rally$Other_Ideology <- ifelse(dat_rally$TerrorType2=="Other", yes=1, no=0)
+
+
+####################################
+
+
+#convert characters into dummy variables
+dat_rally$Exposure <- ifelse(dat_rally$TerrorMeasure=="Acts of violence", yes=1, no=0)
+dat_rally$R_Exposure <- ifelse(dat_rally$TerrorMeasure=="Reported exposure", yes=1, no=0)
+dat_rally$Threat <- ifelse(dat_rally$TerrorMeasure=="Threat", yes=1, no=0)
+dat_rally$Emotions <- ifelse(dat_rally$TerrorMeasure=="Fear" | 
+                                      dat_rally$TerrorMeasure=="Anger", yes=1, no=0)
+dat_rally$Fear <- ifelse(dat_rally$TerrorMeasure=="Fear", yes=1, no=0)
+dat_rally$Anger <- ifelse(dat_rally$TerrorMeasure=="Anger", yes=1, no=0)
+dat_rally$Other_IV <- ifelse(dat_rally$TerrorMeasure=="Other", yes=1, no=0)
+
+############################
+
+#recode data
+dat_rally$Design[dat_rally$TypeStudy==1] <- "Experiments"
+dat_rally$Design[dat_rally$TypeStudy==2] <- "Quasi-Long"
+dat_rally$Design[dat_rally$TypeStudy==3] <- "Correlations"
+dat_rally$Design[dat_rally$TypeStudy==4] <- "Quasi-Long"
+dat_rally$Design <- as.factor(dat_rally$Design)
+#convert characters into dummy variables
+dat_rally$Exp <- ifelse(dat_rally$TypeStudy==1, yes=1, no=0)
+dat_rally$QuasiLong <- ifelse(dat_rally$TypeStudy==2 | 
+                                dat_rally$TypeStudy==4, yes=1, no=0)
+dat_rally$Corr <- ifelse(dat_rally$TypeStudy==3, yes=1, no=0)
+
+
+####################################
+
+#recode data
+dat_rally$Sample[dat_rally$GeneralPop==1] <- "General"
+dat_rally$Sample[dat_rally$StudentPop==1] <- "Student"
+dat_rally$Sample[is.na(dat_rally$Sample)] <- "Convenience"
+dat_rally$Sample <- as.factor(dat_rally$Sample)
+#convert characters into dummy variables
+dat_rally$General <- ifelse(dat_rally$Sample=="General", yes=1, no=0)
+dat_rally$Student <- ifelse(dat_rally$Sample=="Student", yes=1, no=0)
+dat_rally$Convenience <- ifelse(dat_rally$Sample=="Convenience", yes=1, no=0)
+####################################
+#recode data
+dat_rally$Country2[dat_rally$Country=="US"] <- "US"
+dat_rally$Country2[dat_rally$Country=="Israel"] <- "Israel"
+dat_rally$Country2[is.na(dat_rally$Country2)] <- "Other"
+dat_rally$Country2 <- as.factor(dat_rally$Country2)
+#convert characters into dummy variables
+dat_rally$US <- ifelse(dat_rally$Country=="US", yes=1, no=0)
+dat_rally$Israel <- ifelse(dat_rally$Country=="Israel", yes=1, no=0)
+dat_rally$Other_c <- ifelse(dat_rally$US==0 
+                                   & dat_rally$Israel==0, yes=1, no=0)
+####################################
+
+set.seed(1234)
+rf_overall <- rma.mv(y=Fisher, V=Variance_F,
+                     random = ~ 1 | ID_R/ID_ES_Unique, data=dat_rally,
+                     method = "ML")
+rf_overall_df <- tidy(rf_overall) # create data.frame of regression results
+
+rf_overall_df <- rf_overall_df %>% 
+  relabel_predictors(c(overall = "Overall Effect Size")) #re-label variable
+rf_overall_plot <- dwplot(rf_overall_df, #plot
+                          dot_args = list(size = 3),
+                          whisker_args = list(size = 1),
+                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 1))+
+  ggtitle("Rally Effects") +
+  scale_color_grey() +
+  xlim(-0.1, .25) +
+  theme(axis.title.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.ticks=element_blank(),
+        axis.text=element_blank(),
+        plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+        panel.background = element_rect(fill = "grey90",
+                                        colour = "grey90"),
+        panel.grid = element_line(colour = "grey60"))
+
+
+##### Fig3C.2 Terror type ##### 
+#fit model and plot results
+set.seed(1234)
+rf_terror <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(Islam, Other_Ideology, No_Ideology),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_rally,
+                    method = "ML")
+rf_terror_df <- tidy(rf_terror) # create data.frame of regression results
+
+rf_terror_df <- rf_terror_df %>%  #re-label variable
+  relabel_predictors(c(Islam = "Islamist",
+                       Other_Ideology  = "Other Ideology",
+                       No_Ideology  = "No Ideology"))
+rf_terror_plot <- dwplot(rf_terror_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  ylab("Ideology") +
+  scale_y_discrete(position = "right") +
+  scale_color_grey() +
+  theme(axis.text=element_blank(), axis.ticks=element_blank(), 
+        axis.title.y=element_text(face = "bold", size = 14),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"))+
+  xlim(-0.1, .25) 
+
+
+##### Fig3C.3 Research Design ##### 
+#fit model and plot results
+set.seed(1234)
+rf_design <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(Exp, QuasiLong, Corr),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_rally,
+                    method = "ML")
+rf_design_df <- tidy(rf_design) # create data.frame of regression results
+
+rf_design_df <- rf_design_df %>%  #re-label variable
+  relabel_predictors(c(Exp = "Experiments",
+                       Corr  = "Cross-Sectional",
+                       QuasiLong  = "Other Designs"))
+rf_design_plot <- dwplot(rf_design_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(axis.text=element_blank(), axis.ticks=element_blank())+
+  ylab("Design") +
+  scale_y_discrete(position = "right") +
+  scale_color_grey() +
+  theme(axis.text=element_blank(), axis.ticks=element_blank(), 
+        axis.title.y=element_text(face = "bold", size = 14),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"))+
+  xlim(-0.1, .25) 
+
+##### Fig3C.4 Sample  ##### 
+#fit model and plot results
+set.seed(1234)
+rf_sample <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(General, Student, Convenience),
+                    intercept=F, 
+                    random = ~ 1 | ID_R/ID_ES_Unique, data=dat_rally,
+                    method = "ML")
+rf_sample_df <- tidy(rf_sample) # create data.frame of regression results
+
+rf_sample_df <- rf_sample_df %>%  #re-label variable
+  relabel_predictors(c(General = "General Population",
+                       Student  = "Student Samples",
+                       Convenience  = "Convenience Samples"))
+rf_sample_plot <- dwplot(rf_sample_df, #plot
+                         dot_args = list(size = 2),
+                         whisker_args = list(size = 0.5),
+                         vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  theme(axis.text=element_blank(), axis.ticks=element_blank())+
+  ylab("Sample") +
+  scale_y_discrete(position = "right") +
+  scale_color_grey() +
+  theme(axis.text=element_blank(), axis.ticks=element_blank(), 
+        axis.title.y=element_text(face = "bold", size = 14),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"))+
+  xlim(-0.1, .25) 
+
+
+##### Fig3C.5 Geography ##### 
+#fit model and plot results
+set.seed(1234)
+rf_location <- rma.mv(y=Fisher, V=Variance_F, mods = cbind(US, Israel, Other_c),
+                      intercept=F, 
+                      random = ~ 1 | ID_R/ID_ES_Unique, data=dat_rally,
+                      method = "ML")
+rf_location_df <- tidy(rf_location) # create data.frame of regression results
+
+rf_location_df <- rf_location_df %>%  #re-label variable
+  relabel_predictors(c(US = "United States",
+                       Israel  = "Israel",
+                       Other_c  = "Other Countries"))
+rf_location_plot <- dwplot(rf_location_df, #plot
+                           dot_args = list(size = 2),
+                           whisker_args = list(size = 0.5),
+                           vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
+  ylab("Country") +
+  scale_y_discrete(position = "right") +
+  scale_color_grey() +
+  theme(axis.text.y=element_blank(), axis.ticks.y=element_blank(), 
+        axis.title.y=element_text(face = "bold", size = 14),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"))+
+  xlim(-0.1, .25) 
+
+##### Fig3C Rally Effects Effect Sizes Plot ##### 
+rf_plots <- plot_grid(rf_overall_plot, rf_terror_plot, rf_design_plot, rf_sample_plot, rf_location_plot,
+                      ncol=1, nrow=6, 
+                      rel_heights=c(0.8,1,1,1,1,1), align = "v")
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # 
+################################# FIGURE 3 ###############################
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ # 
+
+ggarrange(og_plots, cs_plots, rf_plots,
+          align = "hv",
+          ncol = 3, nrow = 1,
+          widths=c(2.2,1.3,1.4)) #arrange all plots
+
+```
 
 # Model
 
