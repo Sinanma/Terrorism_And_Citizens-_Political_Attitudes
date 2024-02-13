@@ -910,7 +910,8 @@ Our results are summarized in @tbl-modelresults.
 
 ## First discussion point {#sec-first-point}
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+If my paper were 10 pages, then should be be at least 2.5 pages. 
+The discussion is a chance to show off what you know and what you learnt from all this. 
 
 ## Second discussion point
 
