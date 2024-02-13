@@ -17,13 +17,7 @@ bibliography: references.bib
 #| echo: false
 #| warning: false
 #| message: false
-
-# install.packages("tidyverse")
-# install.packages("readxl")
-# install.packages("ggplot2")
-# install.packages("ggpubr")
-# install.packages("dplyr")
-
+#| 
 library(tidyverse)
 library(readxl) # reading excel files
 library(ggplot2)
@@ -44,9 +38,7 @@ Our investigation reveals that terrorism indeed prompts significant shifts in pu
 
 This research contributes to the ongoing dialogue on the implications of terrorism for democratic societies by providing empirical evidence of terrorism's subtle yet significant influence on public political attitudes. By shedding light on the conditions under which terrorism most profoundly affects public sentiment, this paper aims to inform policymakers and scholars alike, guiding the development of strategies that bolster democratic resilience in the face of terror. This paper is organized as follows: an overview of the methodological framework used in our analysis, a presentation of the findings, a discussion contextualizing these results within the broader implications for democracy, and concluding remarks that suggest directions for future research and policy considerations.
 
-
-
-
+\newpage
 
 # Data {#sec-data}
 
@@ -56,37 +48,27 @@ Our study is based on a detailed examination by Amélie Godefroidt published in 
 ## Methodology
 Our approach to expanding on the original study involves a detailed process known as meta-analysis. This means we take a closer look at a bunch of studies already done on how terrorism changes people's opinions and combine their results to get a clearer picture. Following the steps outlined by Godefroidt, we gather, sort out, and examine data from various sources, focusing on 1,733 data points that show the relationship between terrorism and public opinion. We make sure all these points can be compared fairly by converting them into a standard format and adjusting them so they all point in the same direction. This makes our analysis strong and trustworthy. We also add new studies to the mix and use more sophisticated statistical methods to handle the data better, aiming to deepen our understanding of terrorism's impact on how people feel about democracy, strangers, and political beliefs in different parts of the world.
 
+We used the following functions: [@readxl], [@ggplot2], [@ggpubr], [@dplyr] in [@citeR] to create figure and analyze data.
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
-
-```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
-#| echo: false
-
-
-```
-
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
-#| echo: false
-#| warning: false
-#| message: false
-
-
-```
-
-Talk way more about it. 
-
-
-
+\newpage
 # Results
+
+Our analysis, visualized in @fig-terrorism-trend, presents a multifaceted view of terrorism studies over the last three and a half decades.
+
+Temporal Trends in Data Collection and Publication
+Panel A: The Year of Data Collection indicates a notable increase in studies on terrorism following significant global events, such as the 9/11 attacks and the rise of the Islamic State (IS). These pivotal moments appear to catalyze research interest, suggesting a reactive pattern in the academic community to explore terrorism's societal effects following high-profile incidents.
+
+Panel B: Corroborating this trend, the Year of Publication shows a parallel surge in scholarly outputs, with peaks also corresponding to the aftermath of major terrorist events. The data implies that not only does the occurrence of terrorism prompt more research but also hastens the dissemination of findings, potentially reflecting an urgent need to understand and address the immediate impacts of these events.
+
+Variability in Terrorism Measures
+Panel C: The Terrorism Measures graph illustrates the diversity of metrics used to gauge terrorism's impact. Acts of violence and threat exposure are the most commonly studied, indicating a research emphasis on direct experiences and perceptions of terrorism. Meanwhile, measures of fear and anger, while less frequent, point to an emerging interest in the affective responses terrorism elicits.
+
+Diversity in Types of Terrorism Studied
+Panel D: The Type of Terrorism chart reveals an overwhelming focus on Islamist terrorism, overshadowing other ideologies and forms of terrorism. This skew suggests a potential blind spot in the literature, where state terror and extreme-right terrorism are relatively underexamined, despite their significance in certain regions and contexts.
+
 ```{r fig.width=15, fig.height=16}
+#| label: fig-terrorism-trend
+#| fig-cap: Summary of Data Included in theMeta-Analysis
 #| echo: false
 #| warning: false
 #| message: false
@@ -232,8 +214,25 @@ ggarrange(StudyYear, PubYear,
 # combined_plot
 ```
 
+\newpage
 
-Another figure
+Diverse Reactions to Ideological Terrorism
+Outgroup Hostility: Our analysis, represented in @fig-reactions-to-terrorism, underscores that while all forms of ideological terrorism lead to outgroup hostility, the response is strongest in the face of Islamist terrorism. This could reflect media portrayal and public perception biases, where Islamist acts are more closely associated with the concept of terrorism. Interestingly, other ideologies, or the absence of an ideological label, provoke less intense reactions, suggesting a nuanced public sensitivity to the context and framing of terrorist events.
+
+Conservative Shift: A conservative shift in public opinion was noted across all ideological forms of terrorism, but it was less pronounced for 'No ideology' cases. This suggests that the presence of a clear ideological motive in terrorism might be a key driver in swaying public opinion towards conservative policies and viewpoints.
+
+Impact of Research Design on Perceived Threat
+Rally Effects: When examining the influence of research design, experimental designs showed a more marked rally effect compared to cross-sectional studies. This difference indicates that the controlled environment of an experiment, often simulating a direct terrorism threat, might amplify the unifying sentiment among the participants.
+
+Influence of Sample and Country Specifics
+General Population vs. Targeted Samples: The general population samples showed a more consistent increase in outgroup hostility and conservatism across the board, as opposed to student or convenience samples. This highlights the importance of sample representativeness in gauging the true pulse of public opinion in response to terrorism.
+
+Geographic Variations: The country-specific analysis revealed that the United States and Israel, both countries with prolonged experiences of terrorism, showed stronger correlations across all three measures compared to other countries. This may be attributed to the higher frequency of terrorist incidents and the consequent heightened public awareness and reaction in these nations.
+
+Guilt-by-Association Effects
+Lastly, the 'Guilt-by-Association' section of @fig-reactions-to-terrorism provides an intriguing insight into how strong associations with terrorism significantly affect public attitudes, more so than moderate or no associations. This underscores the powerful role of narrative and association in shaping public sentiment post-terrorism.
+
+We used the following additional functions: [@broom], [@dotwhisker], [@cowplot], [@metafor] in [@citeR] to create @fig-reactions-to-terrorism.
 
 ```{r}
 #| echo: false
@@ -634,6 +633,8 @@ cs_plots <- plot_grid(cs_overall_plot, cs_terror_plot, cs_design_plot, cs_sample
 
 
 ```{r fig.width=15, fig.height=16}
+#| label: fig-reactions-to-terrorism
+#| fig-cap: Relationship between Terrorism and Political Attitudes Conditional on Substantive and Methodological Factors
 #| echo: false
 #| warning: false
 #| message: false
@@ -851,130 +852,31 @@ ggarrange(og_plots, cs_plots, rf_plots,
           widths=c(2.2,1.3,1.4)) #arrange all plots
 
 ```
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
-
-```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
-
-```
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
-
-
-```
-
-
-
+\newpage
 
 # Discussion
 
-## First discussion point {#sec-first-point}
+## Findings
 
-If my paper were 10 pages, then should be be at least 2.5 pages. 
-The discussion is a chance to show off what you know and what you learnt from all this. 
+This study has sought to replicate and extend the influential work of Amélie Godefroidt(@Godefroidt2023) on the impact of terrorism on citizens' political attitudes. Our findings affirm Godefroidt's conclusions, highlighting a definitive influence of terrorist acts on increasing outgroup hostility and political conservatism among the public. Consistent with previous research, we find that these attitudes are significantly shaped by the nature of the terrorism, with Islamist terrorism evoking a more pronounced response in public opinion than other forms of ideological terrorism.
 
-## Second discussion point
+## Ethical Implications and Bias
 
-## Third discussion point
+The ethical considerations of studying such a sensitive topic are paramount. Our methodology, a rigorous meta-analysis, ensures a responsible approach to exploring the connections between terrorism and public sentiment. We also acknowledge potential biases inherent in the original studies included in our analysis, such as the over-representation of Islamist terrorism and under-representation of other forms of ideological violence.
 
-## Weaknesses and next steps
+## Limitations
 
-Weaknesses and next steps should also be included.
+Our study is not without limitations. The reliance on secondary data limits our ability to account for all potential confounding variables. Additionally, the focus on published literature may introduce a publication bias, as studies with significant findings are more likely to be published.
 
-\newpage
+## Future Research
 
-\appendix
+Future research should aim to address these limitations by incorporating primary data collection, exploring a wider range of terrorist ideologies, and examining the impact of terrorism in non-Western contexts. Additionally, longitudinal studies could provide insight into the long-term effects of terrorism on political attitudes.
 
-# Appendix {-}
+## Conclusion
 
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
-
-```{r}
-#| eval: true
-#| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
-
-
-```
-
-## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
-
-```{r}
-#| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-
-```
-
-
+In conclusion, our replication and extension of Godefroidt's work contribute to a deeper understanding of the complex relationship between terrorism and political attitudes. It is clear that terrorism has a substantial impact on public sentiment, and this knowledge is crucial for policymakers and scholars in developing strategies to maintain democratic resilience in the face of terrorism.
 
 \newpage
 
 
 # References
-
-
