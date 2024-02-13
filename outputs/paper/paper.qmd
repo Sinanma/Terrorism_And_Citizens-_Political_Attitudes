@@ -19,6 +19,12 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+library(psych)
+library(patchwork)
 ```
 
 
@@ -72,6 +78,155 @@ And also planes (@fig-planes). (You can change the height and width, but don't w
 ```
 
 Talk way more about it. 
+
+
+
+# Results
+```{r fig.width=15, fig.height=16}
+#| echo: false
+#| warning: false
+#| message: false
+
+# make sure the PATH is right in your setup
+# since paper.qmd is under outputs/paper/ folder, we have to jump to parent dir twice
+PATH = "../../inputs/data/02-metaanalysis-data.xlsx"
+
+
+dat <- read_excel(PATH, sheet = "Data",  col_names = TRUE, skip = 3)
+dat_studies <- dat[c(1:87)] #studies.
+dat_studies <- group_by(dat_studies, ID_RS) %>% slice(1)
+
+### dataframe of reports
+dat_reports <- dat[c(1:87)] #reports/publications.
+dat_reports <- group_by(dat_reports, ID_R) %>% slice(1)
+
+
+### set wished layout settings
+mytheme <- theme(plot.title = element_text(face = "bold", size = (22), colour = "black"), 
+                 axis.text = element_text(size = (18), colour = "black"),
+                 axis.ticks.length = unit(0.5, "cm"),
+                 axis.title.y = element_text(size = (22), colour = "black"),
+                 axis.title.x = element_text(size = (22), colour = "white"))
+
+
+# Figure 2A
+StudyYear <- ggplot(dat_studies, aes(x=StudyYear)) + 
+  geom_histogram(binwidth=1,
+                 color="#000000", fill="#939598") +
+  labs(x="to fill some space", y = "", title = "Year of Data Collection") +
+  scale_y_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30, 35, 40, 45)) +
+  scale_x_continuous(breaks = c(1985,1990,1995,2000,2005,2010, 2015,2020)) +
+  theme_classic() #histogram year of study 
+StudyYear <- StudyYear + geom_vline(xintercept=2001, linetype="dashed", size = 1) #add 9/11 line
+StudyYear <- StudyYear + geom_vline(xintercept=2004, linetype="dashed", size = 1) #add line
+StudyYear <- StudyYear + geom_vline(xintercept=2015, linetype="dashed", size = 1) #add ISIS line
+StudyYear <- StudyYear + geom_label(data = dat_studies, 
+                                    aes(x=2001, y=27, label = "9/11"),
+                                    size=8) #add 9/11 label
+StudyYear <- StudyYear + geom_label(data = dat_studies, 
+                                    aes(x=2007, y=35, label = "Madrid & \n Israel-Palestine"),
+                                    size=6) #add label
+StudyYear <- StudyYear + geom_label(data = dat_studies, 
+                                    aes(x=2014, y=44, label = "IS Attacks"),
+                                    size=8) #add ISIS label
+StudyYear <- StudyYear + mytheme
+
+## Figure 2B
+PubYear <- ggplot(dat_reports, aes(x=Year)) + 
+  geom_histogram(binwidth=1, 
+                 color="#000000", fill="#939598") +
+  labs(title ="Year of Publication", x = "to fill some space", y = "") +
+  scale_y_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30, 35, 40, 45)) +
+  scale_x_continuous(breaks = c(1985,1990,1995,2000,2005,2010, 2015,2020)) +
+  theme_classic() #histogram year of study 
+PubYear <- PubYear + geom_vline(xintercept=2001, linetype="dashed", size = 1) #add 9/11 line
+PubYear <- PubYear + geom_vline(xintercept=2015, linetype="dashed", size = 1) #add ISIS France line
+PubYear <- PubYear + geom_label(data = dat_reports,
+                                aes(x=2001, y=27, label = "9/11"),
+                                size=8) #add 9/11 label
+PubYear <- PubYear + geom_label(data = dat_reports, 
+                                aes(x=2014, y=44, label = "IS Attacks"),
+                                size=8) #add ISIS label
+PubYear <- PubYear + mytheme
+
+# wrangling
+dat$TerrorMeasure[dat$IV_Code==1] <- "Acts of violence"
+dat$TerrorMeasure[dat$IV_Code==2] <- "Acts of violence"
+dat$TerrorMeasure[dat$IV_Code==3] <- "Threat"
+dat$TerrorMeasure[dat$IV_Code==4] <- "Threat"
+dat$TerrorMeasure[dat$IV_Code==5] <- "Other"
+dat$TerrorMeasure[dat$IV_Code==6] <- "Reported exposure"
+dat$TerrorMeasure[dat$IV_Code==7] <- "Reported exposure"
+dat$TerrorMeasure[dat$IV_Code==8] <- "Reported exposure"
+dat$TerrorMeasure[dat$IV_Code==9] <- "Threat"
+dat$TerrorMeasure[dat$IV_Code==10] <- "Threat"
+dat$TerrorMeasure[dat$IV_Code==11] <- "Fear"
+dat$TerrorMeasure[dat$IV_Code==12] <- "Anger"
+dat$TerrorMeasure[dat$IV_Code==13] <- "Other"
+dat$TerrorMeasure[dat$IV_Code==14] <- "Other"
+dat$TerrorMeasure[dat$IV_Code==15] <- "Other"
+dat$TerrorMeasure[dat$IV_Code==16] <- "Other"
+
+dat$TerrorMeasure <- as.factor(dat$TerrorMeasure)
+
+#visualization: Figure 2C
+tmdat <- data.frame(prop.table(table(dat$TerrorMeasure)))
+TerrorMeasures <- ggplot(tmdat, aes(x = reorder(Var1, -Freq), y = Freq)) +
+  geom_bar(stat="identity", width=0.7,
+           color="#000000", fill="#939598") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,.6),
+                     breaks = c(0,.1,.2,.3,.4,.5,.6)) +
+  labs(title = "Terrorism Measures", x="", y = "") +
+  theme_classic() 
+TerrorMeasures <- TerrorMeasures + mytheme
+
+#wrangling
+dat$TerrorType[dat$Type==0] <- "No ideology"
+dat$TerrorType[dat$Type==1] <- "Islamist"
+dat$TerrorType[dat$Type==2] <- "Extreme right"
+dat$TerrorType[dat$Type==3] <- "Other"
+dat$TerrorType[dat$Type==4] <- "Other"
+dat$TerrorType[dat$Type==5] <- "State terror"
+dat$TerrorType[dat$Type==6] <- "Other"
+dat$TerrorType <- as.factor(dat$TerrorType)
+
+#visualization: Figure 2D
+ttdat <- data.frame(prop.table(table(dat$TerrorType)))
+TerrorType <- ggplot(ttdat, aes(x = reorder(Var1, -Freq), y = Freq)) +
+  geom_bar(stat="identity", width=0.7,
+           color="#000000", fill="#939598") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  scale_y_continuous(labels = scales::percent,
+                     breaks = c(0,.1,.2,.3,.4,.5,.6)) +
+  labs(title = "Type of Terrorism", x = "", y = "") +
+  theme_classic() 
+TerrorType <- TerrorType + mytheme
+
+
+# jpeg("Fig2.jpeg", width = 15, height = 16, units = 'in', res = 300)
+ggarrange(StudyYear, PubYear, 
+          TerrorMeasures, TerrorType,
+          labels = c("(A)", "(B)", "(C)", "(D)"),
+          font.label = list(size = 22, color = "black"),
+          ncol = 2, nrow = 2) #arrange all plots
+# dev.off() #safe picture in high resolution.
+
+# 
+# StudyYear <- StudyYear + theme(aspect.ratio = 1) + theme(axis.text.x = element_text(size = 5))
+# PubYear <- PubYear + theme(aspect.ratio = 1) + theme(axis.text.x = element_text(size = 5))
+# TerrorMeasures <- TerrorMeasures + theme(aspect.ratio = 1) + theme(axis.text.x = element_text(size = 5))
+# TerrorType <- TerrorType + theme(aspect.ratio = 1) + theme(axis.text.x = element_text(size = 5))
+# 
+# # Combine the plots into a 2x2 grid
+# combined_plot <- (StudyYear | PubYear) / 
+#                  (TerrorMeasures | TerrorType)
+# 
+# # Save the combined plot
+# # ggsave("combined_plot.png", combined_plot, width = 10, height = 10)
+# combined_plot
+```
 
 
 
