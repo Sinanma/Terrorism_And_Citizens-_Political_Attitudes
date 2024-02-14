@@ -3,6 +3,15 @@
 # https://dataverse.harvard.edu/file.xhtml?fileId=5370285&version=1.2
 # Codes are obtained from the above link, in 02-meta-analysis.R, with adjusment
 ###############################################################
+
+#### Preamble ####
+# Purpose: Scripts for generating figure 2
+# Author: Sinan Ma, Yuean Wang, Yang Zhou
+# Date: 15 Feb 2024
+# Contact: cocoyang.zhou@mail.utoronto.ca
+# License: MIT
+
+
 library(tidyverse)
 library(readxl) # reading excel files
 library(ggplot2)
