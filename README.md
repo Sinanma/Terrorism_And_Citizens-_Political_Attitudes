@@ -21,4 +21,4 @@ The repo is structured as:
 
 # LLM Usage Statement
 
-The introduction and Conclusion were written with the help of ChatGPT4 and the entire chat history is available in inputs/LLM/usage.txt.
+The introduction ，Discussion and Conclusion were written with the help of ChatGPT4 and the entire chat history is available in inputs/LLM/usage.txt.
