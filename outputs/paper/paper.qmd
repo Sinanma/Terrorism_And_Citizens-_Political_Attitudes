@@ -4,7 +4,7 @@ author:
   - Sinan Ma
   - Yuean Wang
   - Yang Zhou
-thanks: "Code and data are available at: https://github.com/Sinanma/Terrorism_And_Citizens-_Political_Attitudes. Replication on Social Science Reproduction platform available at: "
+thanks: "Code and data are available at: https://github.com/Sinanma/Terrorism_And_Citizens-_Political_Attitudes. Replication on Social Science Reproduction platform available at: https://doi.org/10.48152/ssrp-ydaf-ss44"
 date: today
 date-format: long
 abstract: "In an era where terrorism intersects with global politics, understanding its repercussions on public attitudes towards democracy is crucial. This paper replicates and extends the data analysis of effects of terrorism on public political opinion, considers various expressions of terrorism and a variety of research methodologies by analyzing findings from previous research. Our findings indicate that terrorism leads to an increase in outgroup hostility and a shift towards political conservatism, and observes variations in rally-'round-the-flag effects. These reactions are influenced by the nature of the terrorist threat and the sociopolitical context. Through this exploration, this paper contributes to the ongoing discourse on the implications of terrorism for democratic societies."
