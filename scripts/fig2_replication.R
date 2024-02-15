@@ -25,8 +25,6 @@ library(cowplot)
 library(metafor)
 
 dat <- read_csv("outputs/data/dat.csv")
-dat_reports <- read_csv("outputs/data/dat_reports.csv")
-dat_studies <- read_csv("outputs/data/dat_studies.csv")
 
 ### custome theme
 mytheme <- theme(plot.title = element_text(face = "bold", size = (22), colour = "black"), 
