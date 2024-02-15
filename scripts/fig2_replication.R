@@ -8,7 +8,7 @@
 # Purpose: Scripts for generating figure 2
 # Author: Sinan Ma, Yuean Wang, Yang Zhou
 # Date: 15 Feb 2024
-# Contact: cocoyang.zhou@mail.utoronto.ca
+# Contact: sinan.ma@mail.utoronto.ca, yuean.wang@mail.utoronto.ca, cocoyang.zhou@mail.utoronto.ca
 # License: MIT
 
 
@@ -45,10 +45,10 @@ og_overall_plot <- dwplot(og_overall_df, #plot
   xlim(-0.1, .25) +
   theme(axis.title.x=element_blank(),
         plot.margin=grid::unit(c(0,0,0,0), "mm"),
-        axis.text.y = element_text(face = "bold",size = 14),
+        axis.text.y = element_text(face = "bold",size = 30),
         axis.ticks.x=element_blank(),
         axis.text.x=element_blank(),
-        plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+        plot.title = element_text(hjust = 0.5, size = 30, face = "bold"),
         panel.background = element_rect(fill = "grey90",
                                         colour = "grey90"),
         panel.grid = element_line(colour = "grey60"))
@@ -70,8 +70,10 @@ og_terror_plot <- dwplot(og_terror_df, #plot
                          dot_args = list(size = 2),
                          whisker_args = list(size = 0.5),
                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
-  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
-        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  theme(axis.text.x=element_blank(), 
+        axis.ticks.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.text.y = element_text(size = 25)) +
   scale_color_grey() +
   xlim(-0.1, .25) 
 
@@ -91,8 +93,10 @@ og_design_plot <- dwplot(og_design_df, #plot
                          dot_args = list(size = 2),
                          whisker_args = list(size = 0.5),
                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
-  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
-        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  theme(axis.text.x=element_blank(), 
+        axis.ticks.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.text.y = element_text(size = 25)) +
   scale_color_grey() +
   xlim(-0.1, .25) 
 
@@ -114,8 +118,10 @@ og_sample_plot <- dwplot(og_sample_df, #plot
                          dot_args = list(size = 2),
                          whisker_args = list(size = 0.5),
                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
-  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
-        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  theme(axis.text.x=element_blank(), 
+        axis.ticks.x=element_blank(),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.text.y = element_text(size = 25)) +
   scale_color_grey() +
   xlim(-0.1, .25) 
 
@@ -136,7 +142,9 @@ og_location_plot <- dwplot(og_location_df, #plot
                            dot_args = list(size = 2),
                            whisker_args = list(size = 0.5),
                            vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
-  theme(plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+  theme(plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 25)) +
   scale_color_grey() +
   xlim(-0.1, .25) 
 
@@ -162,7 +170,10 @@ og_association_plot <- dwplot(og_association_df, #plot
   scale_y_discrete(position = "left") +
   scale_color_grey() +
   theme(axis.title=element_text(face = "bold"),
-        plot.margin=grid::unit(c(0,0,0,0), "mm"))+
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.text.y = element_text(size = 25),
+        axis.text.x = element_text(size = 20),
+        plot.title = element_text(size = 20, face = "bold"))+
   xlim(-0.1, .25) 
 
 ##### Fig3A Outgroup Hostility Effect Sizes Plot ##### 
@@ -195,7 +206,7 @@ cs_overall_plot <- dwplot(cs_overall_df, #plot
         plot.margin=grid::unit(c(0,0,0,0), "mm"),
         axis.ticks=element_blank(),
         axis.text=element_blank(),
-        plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+        plot.title = element_text(hjust = 0.5, size = 30, face = "bold"),
         panel.background = element_rect(fill = "grey90",
                                         colour = "grey90"),
         panel.grid = element_line(colour = "grey60"))
@@ -218,7 +229,7 @@ cs_terror_plot <- dwplot(cs_terror_df, #plot
                          dot_args = list(size = 2),
                          whisker_args = list(size = 0.5),
                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
-  theme(plot.title = element_text(size = 14), axis.text=element_blank(), axis.ticks=element_blank(),
+  theme(plot.title = element_text(size = 30), axis.text=element_blank(), axis.ticks=element_blank(),
         plot.margin=grid::unit(c(0,0,0,0), "mm")) +
   scale_color_grey() +
   xlim(-0.1, .25) 
@@ -240,7 +251,7 @@ cs_design_plot <- dwplot(cs_design_df, #plot
                          dot_args = list(size = 2),
                          whisker_args = list(size = 0.5),
                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
-  theme(plot.title = element_text(size = 14), axis.text=element_blank(), 
+  theme(plot.title = element_text(size = 30), axis.text=element_blank(), 
         axis.ticks=element_blank(),
         plot.margin=grid::unit(c(0,0,0,0), "mm")) +
   scale_color_grey() +
@@ -264,7 +275,7 @@ cs_sample_plot <- dwplot(cs_sample_df, #plot
                          dot_args = list(size = 2),
                          whisker_args = list(size = 0.5),
                          vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
-  theme(plot.title = element_text(size = 14), 
+  theme(plot.title = element_text(size = 30), 
         axis.text=element_blank(), axis.ticks=element_blank(),
         plot.margin=grid::unit(c(0,0,0,0), "mm")) +
   scale_color_grey() +
@@ -287,9 +298,10 @@ cs_location_plot <- dwplot(cs_location_df, #plot
                            dot_args = list(size = 2),
                            whisker_args = list(size = 0.5),
                            vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2, size = 0.7)) +
-  theme(plot.title = element_text(size = 14), 
+  theme(plot.title = element_text(size = 30), 
         axis.text.y=element_blank(), axis.ticks.y=element_blank(),
-        plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.text.x = element_text(size = 20)) +
   scale_color_grey() +
   xlim(-0.1, .25) 
 
@@ -324,7 +336,7 @@ rf_overall_plot <- dwplot(rf_overall_df, #plot
         plot.margin=grid::unit(c(0,0,0,0), "mm"),
         axis.ticks=element_blank(),
         axis.text=element_blank(),
-        plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+        plot.title = element_text(hjust = 0.5, size = 30, face = "bold"),
         panel.background = element_rect(fill = "grey90",
                                         colour = "grey90"),
         panel.grid = element_line(colour = "grey60"))
@@ -351,7 +363,7 @@ rf_terror_plot <- dwplot(rf_terror_df, #plot
   scale_y_discrete(position = "right") +
   scale_color_grey() +
   theme(axis.text=element_blank(), axis.ticks=element_blank(), 
-        axis.title.y=element_text(face = "bold", size = 14),
+        axis.title.y=element_text(face = "bold", size = 30),
         plot.margin=grid::unit(c(0,0,0,0), "mm"))+
   xlim(-0.1, .25) 
 
@@ -378,7 +390,7 @@ rf_design_plot <- dwplot(rf_design_df, #plot
   scale_y_discrete(position = "right") +
   scale_color_grey() +
   theme(axis.text=element_blank(), axis.ticks=element_blank(), 
-        axis.title.y=element_text(face = "bold", size = 14),
+        axis.title.y=element_text(face = "bold", size = 30),
         plot.margin=grid::unit(c(0,0,0,0), "mm"))+
   xlim(-0.1, .25) 
 
@@ -404,7 +416,7 @@ rf_sample_plot <- dwplot(rf_sample_df, #plot
   scale_y_discrete(position = "right") +
   scale_color_grey() +
   theme(axis.text=element_blank(), axis.ticks=element_blank(), 
-        axis.title.y=element_text(face = "bold", size = 14),
+        axis.title.y=element_text(face = "bold", size = 30),
         plot.margin=grid::unit(c(0,0,0,0), "mm"))+
   xlim(-0.1, .25) 
 
@@ -430,8 +442,9 @@ rf_location_plot <- dwplot(rf_location_df, #plot
   scale_y_discrete(position = "right") +
   scale_color_grey() +
   theme(axis.text.y=element_blank(), axis.ticks.y=element_blank(), 
-        axis.title.y=element_text(face = "bold", size = 14),
-        plot.margin=grid::unit(c(0,0,0,0), "mm"))+
+        axis.title.y=element_text(face = "bold", size = 30),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        axis.text.x = element_text(size = 20))+
   xlim(-0.1, .25) 
 
 ##### Fig3C Rally Effects Effect Sizes Plot ##### 
