@@ -8,8 +8,9 @@
 # Purpose: Pre-processing of meta-analysis data
 # Author: Sinan Ma, Yuean Wang, Yang Zhou
 # Date: 15 Feb 2024
-# Contact: cocoyang.zhou@mail.utoronto.ca
+# Contact: sinan.ma@mail.utoronto.ca, yuean.wang@mail.utoronto.ca, cocoyang.zhou@mail.utoronto.ca
 # License: MIT
+#Pre-requisites: go through 01-download.R
 
 library(tidyverse)
 library(readxl) # reading excel files

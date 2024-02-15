@@ -8,7 +8,7 @@
 # Purpose: Scripts for generating figure 1
 # Author: Sinan Ma, Yuean Wang, Yang Zhou
 # Date: 15 Feb 2024
-# Contact: cocoyang.zhou@mail.utoronto.ca
+# Contact: sinan.ma@mail.utoronto.ca, yuean.wang@mail.utoronto.ca, cocoyang.zhou@mail.utoronto.ca
 # License: MIT
 
 
