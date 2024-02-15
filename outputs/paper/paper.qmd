@@ -54,23 +54,15 @@ We used the following packages: `readxl` [@readxl], `ggplot2` [@ggplot2], `ggpub
 \newpage
 # Results {#sec-data}
 
-The results section analyses the research trends and diverse reactions to ideological terrorism, supported by two figures. The analysis begins with a detailed examination of the evolution in terrorism research over the past thirty-five years, highlighted by @fig-terrorism-trend, which showcases shifts in academic focus, data collection, and publication patterns in response to global terrorism events. Then we analyse on @fig-reactions-to-terrorism, which provides a nuanced view of how terrorism impacts political attitudes and public reactions across different ideologies, study designs, and geographical contexts. Through these visual representations, the section underscores the complexity of terrorism's societal impact and the importance of diversifying research approaches to fully understand its multifaceted nature.
+The results section analyses the research trends and diverse reactions to ideological terrorism, supported by two figures. The analysis begins with a detailed examination of the evolution in terrorism research over the past thirty-five years, highlighted by @fig-terrorism-trend and @fig-measure, which showcases shifts in academic focus, data collection, and publication patterns in response to global terrorism events. Then we analyse on @fig-reactions-to-terrorism, which provides a nuanced view of how terrorism impacts political attitudes and public reactions across different ideologies, study designs, and geographical contexts. Through these visual representations, the section underscores the complexity of terrorism's societal impact and the importance of diversifying research approaches to fully understand its multifaceted nature.
 
 ## Comprehensive Review of Research Trends
-The set of graphs presented in @fig-terrorism-trend illustrate a multifaceted view of terrorism studies over the past thirty-five years. Each graph demonstrates different aspects and emphases in the study of terrorism, reflecting shifts in global events, academic focus, and thematic categorization. The results emphasize the reactive nature of terrorism research and the importance of diversifying the types of terrorism studied as well as the measures used to assess its impact.
+The set of graphs presented in @fig-terrorism-trend and @fig-measure illustrate a multifaceted view of terrorism studies over the past thirty-five years. Each graph demonstrates different aspects and emphases in the study of terrorism, reflecting shifts in global events, academic focus, and thematic categorization. The results emphasize the reactive nature of terrorism research and the importance of diversifying the types of terrorism studied as well as the measures used to assess its impact.
 It is critical to understanding how the field is developing and where may need future attention.
 
 ### Temporal Trends in Data Collection and Publication
 
 The Year of Data Collection graph (Panel A in @fig-terrorism-trend) illustrates the frequency of data collection efforts over time. The notable peak in the graph indicates a notable increase in terrorism research following significant global incidents, such as the 9/11 attacks and the rise of the Islamic State (IS). These moments stimulate the academic community to investigate the societal repercussions of terrorism following high-profile incidents. Similarly, the Year of Publications graph (Panel B in @fig-terrorism-trend) demonstrates a concurrent increase in the publication of scholarly works, with notable peaks following major terrorist occurrences. The lag between data collection and publication peaks may indicate the time taken for analysis and peer review. This graph underscores the reactive nature of academic publishing in response to terrorism, the understandings in response to the immediate effects of such incidents and increased potential for saturation of literature after major events.
-
-### Variability in Terrorism Measures
-
-The Terrorism Measures graph (Panel C in @fig-terrorism-trend) illustrates the diversity of metrics used to measure the impact terrorism. Acts of violence and threat exposure are the most commonly studied, indicating a research focus on direct experiences and perceptions of terrorism. In the meanwhile, it shows an emerging interest in the affective responses elicited by terrorism, even though fear and anger are expressed less frequently. These findings suggest a broader recognition of terrorism's  effects on economic disruptions, reduce productivity, and damage infrastructure, thereby reflecting the multifaceted societal impacts of terrorist.
-
-### Diversity in Types of Terrorism Studies
-
-The Type of Terrorism graph (Panel D in @fig-terrorism-trend) illustrates the focus of the academic and policy-making communities. It indicates an over-whelming focus on Islamist terrorism, overshadowing other ideologies and forms of terrorism. This skew suggests a potential blind spot in the literature, where state terror and extreme-right terrorism are relatively under-examined, despite their significance in certain regions and contexts. 
 
 ```{r }
 #| label: fig-terrorism-trend
@@ -82,6 +74,26 @@ The Type of Terrorism graph (Panel D in @fig-terrorism-trend) illustrates the fo
 #| out.height: "90%"  # Adjust to fit the page
 
 knitr::include_graphics("../../outputs/figures/Figure1.jpeg")
+```
+
+### Variability in Terrorism Measures
+
+The Terrorism Measures graph (Panel C in @fig-measure) illustrates the diversity of metrics used to measure the impact terrorism. Acts of violence and threat exposure are the most commonly studied, indicating a research focus on direct experiences and perceptions of terrorism. In the meanwhile, it shows an emerging interest in the affective responses elicited by terrorism, even though fear and anger are expressed less frequently. These findings suggest a broader recognition of terrorism's  effects on economic disruptions, reduce productivity, and damage infrastructure, thereby reflecting the multifaceted societal impacts of terrorist.
+
+### Diversity in Types of Terrorism Studies
+
+The Type of Terrorism graph (Panel D in @fig-measure) illustrates the focus of the academic and policy-making communities. It indicates an over-whelming focus on Islamist terrorism, overshadowing other ideologies and forms of terrorism. This skew suggests a potential blind spot in the literature, where state terror and extreme-right terrorism are relatively under-examined, despite their significance in certain regions and contexts. 
+
+```{r }
+#| label: fig-measure
+#| fig-cap: Summary of Data Included in Terrorism Measures and Terrorism Studies
+#| echo: false
+#| warning: false
+#| message: false
+#| out.width: "90%"  # Adjust to fit the page
+#| out.height: "90%"  # Adjust to fit the page
+
+knitr::include_graphics("../../outputs/figures/Figure2.jpeg")
 ```
 
 \newpage
@@ -121,7 +133,7 @@ Lastly, the 'Guilt-by-Association' section of @fig-reactions-to-terrorism provid
 #| message: false
 #| out.width: "90%"  # Adjust to fit the page
 #| out.height: "90%"  # Adjust to fit the page
-knitr::include_graphics("../../outputs/figures/Figure2.jpeg")
+knitr::include_graphics("../../outputs/figures/Figure3.jpeg")
 ```
 
 

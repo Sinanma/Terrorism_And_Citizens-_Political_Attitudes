@@ -36,7 +36,7 @@ mytheme <- theme(plot.title = element_text(face = "bold", size = (22), colour = 
                  axis.title.x = element_text(size = (22), colour = "white"))
 
 
-# Figure 2A
+# Figure 1A
 StudyYear <- ggplot(dat_studies, aes(x=StudyYear)) + 
   geom_histogram(binwidth=1, color="#000000", fill="#939598") +
   labs(x="to fill some space", y = "", title = "Year of Data Collection") +
@@ -51,7 +51,7 @@ StudyYear <- ggplot(dat_studies, aes(x=StudyYear)) +
   geom_label(data = dat_studies, aes(x=2014, y=44, label = "IS Attacks"), size=8) + #add ISIS label
   mytheme
 
-## Figure 2B
+## Figure 1B
 PubYear <- ggplot(dat_reports, aes(x=Year)) + 
   geom_histogram(binwidth=1, color="#000000", fill="#939598") +
   labs(title ="Year of Publication", x = "to fill some space", y = "") +
@@ -65,31 +65,11 @@ PubYear <- ggplot(dat_reports, aes(x=Year)) +
   mytheme
 
 
-#visualization: Figure 2C
-tmdat <- data.frame(prop.table(table(dat$TerrorMeasure)))
-TerrorMeasures <- ggplot(tmdat, aes(x = reorder(Var1, -Freq), y = Freq)) +
-  geom_bar(stat="identity", width=0.7, color="#000000", fill="#939598") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  scale_y_continuous(labels = scales::percent, limits = c(0,.6), breaks = c(0,.1,.2,.3,.4,.5,.6)) +
-  labs(title = "Terrorism Measures", x="", y = "") +
-  theme_classic() +
-  mytheme
 
 
-#visualization: Figure 2D
-ttdat <- data.frame(prop.table(table(dat$TerrorType)))
-TerrorType <- ggplot(ttdat, aes(x = reorder(Var1, -Freq), y = Freq)) +
-  geom_bar(stat="identity", width=0.7, color="#000000", fill="#939598") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  scale_y_continuous(labels = scales::percent, breaks = c(0,.1,.2,.3,.4,.5,.6)) +
-  labs(title = "Type of Terrorism", x = "", y = "") +
-  theme_classic() +
-  mytheme
-
-
-jpeg("outputs/figures/Figure1.jpeg", width = 15, height = 16, units = 'in', res = 300)
-ggarrange(StudyYear, PubYear, TerrorMeasures, TerrorType,
-          labels = c("(A)", "(B)", "(C)", "(D)"),
+jpeg("outputs/figures/Figure1.jpeg", width = 15, height = 6, units = 'in', res = 300)
+ggarrange(StudyYear, PubYear,
+          labels = c("(A)", "(B)"),
           font.label = list(size = 22, color = "black"),
-          ncol = 2, nrow = 2) #arrange all plots
+          ncol = 2, nrow = 1) #arrange all plots
 dev.off() #safe picture in high resolution.
